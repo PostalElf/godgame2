@@ -1,0 +1,5 @@
+ID,Name,Description,MaxPhilosophy,Modifier1,Modifier2,Modifier3,Modifier4,Modifier5
+1,Shamanic Tradition,,Superstition 2 Magic 1,SettlementRecruit Priests +1,,,,
+2,Animism,,Superstition 2 Art 1,SettlementIncome Faith +2,,,,
+3,Monarchy,,Tradition 1 Politic 2 Economic 1,SettlementDefence +5,,,,
+4,Council of Elders,,Tradition 2 Politic 1 Art 1,SettlementIncome Faith +5,,,,

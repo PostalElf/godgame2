@@ -1,0 +1,52 @@
+[Forest]
+ Glade
+ Woods
+ Forests
+ Weald
+ Thickets
+
+
+[Mountain]
+ Hills
+ Range
+ Mountains
+ Valley
+ Cliffs
+ Bluffs
+ Peaks
+ Alps
+
+
+[Lake]
+ Lagoon
+ Pond
+ Pool
+ Loch
+ Springs
+ Basin
+
+
+[Swamp]
+ Swamps
+ Bog
+ Marshes
+ Moors
+ Wetlands
+
+
+[Plains]
+ Fields
+ Plains
+ Orchards
+ Meadows
+ Steppes
+ Plateau
+
+
+[Wasteland]
+ Wastes
+ Badlands
+ Sands
+ Wilds
+ Tangle
+ Barrens

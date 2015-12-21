@@ -218,6 +218,7 @@ Public Enum reportQueueType
     SettlementTradeNew
     SettlementEnshrineArtefact
     SettlementTerraformCompleted
+    SettlementTravelWarning
     ArmyAttack
     SettlementDamaged
 

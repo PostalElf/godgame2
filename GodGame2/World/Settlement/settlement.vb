@@ -567,13 +567,16 @@
             If availablePopsegs.Contains(popseg.Farmers) Then availablePopsegs.Remove(popseg.Farmers)
         End If
 
-        'roll and remove popseg
-        Dim roll As Integer = rng.Next(availablePopsegs.Count)
-        Dim deadPopseg As popseg = availablePopsegs(roll)
-        removePopulation(deadPopseg)
-
-        'announce death
-        report.Add(name & " loses a " & stripS(deadPopseg.ToString) & " to starvation.", reportQueueType.SettlementCitizenLost, empire)
+        'roll and remove popseg; if no popseg to remove, damage settlement instead
+        If availablePopsegs.Count > 0 Then
+            Dim roll As Integer = rng.Next(availablePopsegs.Count)
+            Dim deadPopseg As popseg = availablePopsegs(roll)
+            removePopulation(deadPopseg)
+            report.Add(name & " loses a " & stripS(deadPopseg.ToString) & " to starvation.", reportQueueType.SettlementCitizenLost, empire)
+        Else
+            addDamage(2)
+            report.Add(name & " riots due to starvation, causing 2 ticks worth of damage.", reportQueueType.SettlementDamaged, empire)
+        End If
     End Sub
 
     Private Property popIncome As New Dictionary(Of resource, Integer)

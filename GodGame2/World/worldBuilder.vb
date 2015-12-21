@@ -21,13 +21,15 @@
         Dim world As New world
         With world
             For n = 1 To size
-                Dim shard As shard = buildShard(world)
+                Dim wonderShard As Boolean = False
+                If n Mod 4 = 0 Then wonderShard = True
+                Dim shard As shard = buildShard(world, wonderShard)
             Next
         End With
 
         Return world
     End Function
-    Private Function buildShard(ByRef world As world) As shard
+    Private Function buildShard(ByRef world As world, isWonderShard As Boolean) As shard
         Dim shard As New shard(world)
         shard.name = getRandomShardName()
 
@@ -41,12 +43,43 @@
         shard.coords = New xy(x, y)
 
 
-        'build confirmed settlement site
-        shard.addTravelLocation(buildSettlementSite)
+        'branch for wonderShard
+        If isWonderShard = True Then
+            'determine wilderness type
+            Dim roll As Integer = rng.Next(wildernessList.Count)
+            Dim wildernessType As wildernessType = wildernessList(roll)
+            wildernessList.RemoveAt(roll)
+
+            'determine wonder from wildernessType
+            If wonderList.Count = 0 Then buildWonderList()
+            Dim potentialWonders As List(Of wonder) = wonderList(wildernessType)
+            Dim wonder As wonder
+            If potentialWonders.Count > 0 Then
+                roll = rng.Next(potentialWonders.Count)
+                wonder = potentialWonders(roll)
+                potentialWonders.RemoveAt(roll)
+            Else
+                'default wonder when wonderlist runs out of options
+                wonder = New wonder
+                With wonder
+                    .name = "The Fields of Oblivion"
+                    .wildernessType = wildernessType.Plains
+                    .modifiers.Add(New modifier(.modifiers, "The Fields of Oblivion", "SettlementPopulationIncome Farmers -20"))
+                End With
+            End If
+
+            'add
+            shard.addTravelLocation(wonder, 0)
+        Else
+            'build confirmed settlement site
+            shard.addTravelLocation(buildSettlementSite)
+
+            'build wilderness
+            buildRandomWilderness(shard)
+        End If
 
 
-        'build wilderness and other travel locations
-        buildRandomWilderness(shard)
+        'build other travel locations
         For n = 1 To 3
             Dim roll As Integer = rng.Next(1, 11)
             Select Case roll
@@ -87,7 +120,7 @@
         Dim wilderness As New wilderness
         With wilderness
             Dim roll As Integer = rng.Next(wildernessList.Count)
-            .type = wildernessList.Count
+            .type = wildernessList(roll)
             wildernessList.RemoveAt(roll)
 
             .name = wilderness.getRandomWildernessName(.type)
@@ -127,6 +160,85 @@
 
         Return prefix & mid & suffix
     End Function
+    Private Property wonderList As New Dictionary(Of wildernessType, List(Of wonder))
+    Private Sub buildWonderList()
+        wonderList.Clear()
+
+        For Each wild In constants.wildernessTypeArray
+            wonderList.Add(wild, New List(Of wonder))
+            For n = 1 To 3
+                Dim wonder As New wonder
+                With wonder
+                    Select Case wild
+                        Case wildernessType.Forest
+                            Select Case n
+                                Case 1
+                                    .name = "The Eternal Garden"
+                                    .modifiers.Add(New modifier(.modifiers, "The Eternal Garden", "SettlementIncome Food +50"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Eternal Garden", "SettlementIncome Faith +50"))
+                                Case 2
+
+                                Case 3
+
+                            End Select
+
+                        Case wildernessType.Lake
+                            Select Case n
+                                Case 1
+                                    .name = "The Crystal Fields"
+                                    .modifiers.Add(New modifier(.modifiers, "The Crystal Fields", "GoodUnlock Crystal"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Crystal Fields", "SettlementPopulationIncome Savants +10"))
+                                Case 2
+
+                                Case 3
+
+                            End Select
+
+                        Case wildernessType.Mountain
+                            Select Case n
+                                Case 1
+                                    .name = "The Fire Mountain"
+                                    .modifiers.Add(New modifier(.modifiers, "The Fire Mountain", "GoodUnlock Metal"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Fire Mountain", "SettlementPopulationIncome Traders +10"))
+                                Case 2
+                                    .name = "The Obsidian Ridge"
+                                    .modifiers.Add(New modifier(.modifiers, "The Obsidian Ridge", "SettlementPopulationIncome Traders +10"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Obsidian Ridge", "SettlementPopulationIncome Savants +10"))
+                                Case 3
+
+                            End Select
+
+                        Case wildernessType.Plains
+                            Select Case n
+                                Case 1
+                                    .name = "Sandor's Arch"
+                                    .modifiers.Add(New modifier(.modifiers, "Sandor's Arch", "SettlementIncome Wealth +10/Traders"))
+                                    .modifiers.Add(New modifier(.modifiers, "Sandor's Arch", "SettlementIncome Faith +10/Traders"))
+                                Case 2
+                                    .name = "The Emerald Sea"
+                                    .modifiers.Add(New modifier(.modifiers, "The Emerald Sea", "SettlementRecruit Farmers +1"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Emerald Sea", "SettlementPopulationIncome Farmers +20"))
+                                Case 3
+
+                            End Select
+
+                        Case wildernessType.Swamp
+                            Select Case n
+                                Case 1
+                                    .name = "The Cauldron"
+                                    .modifiers.Add(New modifier(.modifiers, "The Cauldron", "GoodUnlock Reagents"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Cauldron", "SettlementIncome Science +10/Farmers"))
+                                Case 2
+
+                                Case 3
+
+                            End Select
+                    End Select
+                End With
+                If wonder.name <> "" Then wonderList(wild).Add(wonder)
+            Next
+        Next
+    End Sub
 
     Friend Function buildEmpire(ByRef world As world, name As String, isAI As Boolean) As empire
         Dim empire As New empire

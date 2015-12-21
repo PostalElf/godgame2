@@ -117,6 +117,7 @@
     <Compile Include="World\shard.vb" />
     <Compile Include="World\TravelLocations\wasteland.vb" />
     <Compile Include="World\TravelLocations\wilderness.vb" />
+    <Compile Include="World\TravelLocations\wonder.vb" />
     <Compile Include="World\world.vb" />
     <Compile Include="World\worldBuilder.vb" />
   </ItemGroup>

@@ -984,6 +984,7 @@
         menuChoices.Add("4"c, "Setup Hero and Artefact Test")
         menuChoices.Add("5"c, "Setup Test Threat")
         menuChoices.Add("6"c, "Setup Terraform Test")
+        menuChoices.Add("7"c, "Send Enemy Army")
 
         Select Case menu.getListChoice(menuChoices, 1)
             Case "s"c
@@ -1175,6 +1176,17 @@
                 Console.ReadKey()
 
 
+            Case "7"c
+                Console.WriteLine()
+                Console.WriteLine()
+                Dim enemy As empire = world.empires(1)
+                Dim enemySettlement As settlement = enemy.settlements(0)
+                enemySettlement.addPopulation(popseg.Warriors, 5)
+                enemySettlement.buildArmy("Skelgor's Elites", player.settlements(0), 5, 0)
+                report.DisplayTempReports(0)
+                Console.WriteLine()
+                Console.WriteLine("Done.")
+                Console.ReadKey()
             Case Else
                 Exit Sub
         End Select

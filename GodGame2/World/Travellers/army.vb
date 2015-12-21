@@ -124,6 +124,8 @@
         'movement
         If travelLocation Is Nothing Then
             travelProgress += travelSpeed
+
+            'arrive destination check
             If travelProgress >= travelCost Then
                 teleportTo(travelDestination)
 

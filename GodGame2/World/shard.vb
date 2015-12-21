@@ -58,6 +58,13 @@
 
         If index = -1 Then pTravelLocations.Add(travelLocation) Else pTravelLocations.Insert(index, travelLocation)
         travelLocation.shard = Me
+
+        If TypeOf travelLocation Is wonder Then
+            Dim wonder As wonder = CType(travelLocation, wonder)
+            For Each modifier In wonder.modifiers
+                addShardModifier(modifier, True)
+            Next
+        End If
     End Sub
     Friend Sub removeTravelLocation(travelLocation As travelLocation)
         If pTravelLocations.Contains(travelLocation) = False Then
@@ -66,6 +73,14 @@
         End If
 
         pTravelLocations.Remove(travelLocation)
+        travelLocation.shard = Nothing
+
+        If TypeOf travelLocation Is wonder Then
+            Dim wonder As wonder = CType(travelLocation, wonder)
+            For Each modifier In wonder.modifiers
+                removeShardModifier(modifier, True)
+            Next
+        End If
     End Sub
     Friend Function settleSettlement(ByRef empire As empire, Optional index As Integer = -1) As settlement
         Dim possibleSite As travelLocation = Nothing
@@ -176,6 +191,9 @@
                 If TypeOf (travelLocation) Is wilderness Then
                     Dim wilderness As wilderness = CType(travelLocation, wilderness)
                     total.Add(wilderness.type)
+                ElseIf TypeOf travelLocation Is wonder Then
+                    Dim wonder As wonder = CType(travelLocation, wonder)
+                    total.Add(wonder.wildernessType)
                 End If
             Next
             Return total

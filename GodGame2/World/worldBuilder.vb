@@ -181,13 +181,13 @@
                                     .modifiers.Add(New modifier(.modifiers, "The Sword Tree", "GoodUnlock Metal"))
                                     .modifiers.Add(New modifier(.modifiers, "The Sword Tree", "WarriorEfficiency +10"))
                                 Case 3
-                                    .name = ""
-                                    .modifiers.Add(New modifier(.modifiers, "", "GoodUnlock Reagents"))
-                                    .modifiers.Add(New modifier(.modifiers, "", ""))
+                                    .name = "The Lifeoak"
+                                    .modifiers.Add(New modifier(.modifiers, "The Lifeoak", "GoodUnlock Reagents"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Lifeoak", "SettlementPublicOrder +5/All"))
                                 Case 4
-                                    .name = ""
-                                    .modifiers.Add(New modifier(.modifiers, "", "GoodUnlock Crystal"))
-                                    .modifiers.Add(New modifier(.modifiers, "", ""))
+                                    .name = "The Baluster Chandelier"
+                                    .modifiers.Add(New modifier(.modifiers, "The Baluster Chandelier", "GoodUnlock Crystal"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Baluster Chandelier", "SettlementPopulationIncome Traders +10"))
                             End Select
 
                         Case wildernessType.Lake
@@ -248,9 +248,9 @@
                                     .modifiers.Add(New modifier(.modifiers, "The Tree of Words", "SettlementRecruit Priests +2"))
                                     .modifiers.Add(New modifier(.modifiers, "The Tree of Words", "SettlementPopulationIncome Priests +15"))
                                 Case 4
-                                    .name = ""
-                                    .modifiers.Add(New modifier(.modifiers, "", ""))
-                                    .modifiers.Add(New modifier(.modifiers, "", ""))
+                                    .name = "The Wordstone"
+                                    .modifiers.Add(New modifier(.modifiers, "The Wordstone", "WarmageEfficiency +1"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Wordstone", "SettlementRecruit Warmages +1"))
                             End Select
 
                         Case wildernessType.Swamp

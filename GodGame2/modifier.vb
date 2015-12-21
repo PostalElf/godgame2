@@ -36,7 +36,9 @@
             If isDependent = False Then
                 valueStr = withSign(pValue)
             Else
-                If dependentPopseg <> Nothing Then
+                If dependentPopseg = -1 Then
+                    valueStr = withSign(pValue) & " per citizen"
+                ElseIf dependentPopseg <> Nothing Then
                     valueStr = withSign(pValue) & " per " & stripS(dependentPopseg.ToString)
                 ElseIf dependentRawHeroSkill <> Nothing Then
                     valueStr = withSign(pValue) & " per " & dependentRawHeroSkill.ToString

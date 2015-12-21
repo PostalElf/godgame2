@@ -408,6 +408,7 @@
         menuChoices.Add("c"c, "Alter Culture Research")
         menuChoices.Add("z"c, "Change Zeitgeist")
         menuChoices.Add("p"c, "Change Philosophy")
+        menuChoices.Add("e"c, "Engineer Songstone")
 
         While True
             Console.Clear()
@@ -424,6 +425,7 @@
                 Case "c"c : menuAlterTech(resource.Culture)
                 Case "z"c : menuAlterZeitgeist()
                 Case "p"c : menuAlterPhilosophy()
+                Case "e"c : menuSongstone()
                 Case Else : Exit While
             End Select
         End While
@@ -670,6 +672,46 @@
         Console.WriteLine()
         chosenHero.questGeas(chosenThreat)
         report.DisplayImmediateReports(0, player)
+    End Sub
+    Private Sub menuDivineConception(Optional aSettlement As settlement = Nothing)
+        Const cost As Integer = 2
+        Const powerCost As divinePower = divinePower.Destiny
+        Dim god As god = player.god
+
+        Console.WriteLine()
+        Console.WriteLine()
+
+        If menuSpendPower(cost, powerCost, "concieve a child.") = False Then Exit Sub
+
+        Console.WriteLine()
+        Console.WriteLine()
+        Dim settlement As settlement
+        If aSettlement Is Nothing Then
+            settlement = menu.getListChoice(player.settlements, 1, "Select a settlement:")
+            If settlement Is Nothing Then
+                god.addPower(powerCost, cost)
+                Exit Sub
+            End If
+        Else
+            settlement = aSettlement
+        End If
+
+        Console.WriteLine()
+        Dim popsegs As New List(Of String)
+        For Each popseg In constants.popsegArray
+            popsegs.Add(popseg.ToString)
+        Next
+        Dim popStr As String = menu.getListChoice(popsegs, 1, "Select a Citizen:")
+        Dim pop As popseg = constants.getPopSegFromString(popStr)
+        If pop = Nothing Then
+            god.addPower(powerCost, cost)
+            Exit Sub
+        End If
+
+        Console.WriteLine()
+        Console.WriteLine("You spend " & cost & " " & powerCost.ToString & " to ensure the next birth in " & settlement.name & " is a " & stripS(popStr) & ".")
+        settlement.addSettlementModifier(New modifier(Nothing, "Divine Conception", "SettlementGuaranteedRecruit " & popStr))
+        Console.ReadKey()
     End Sub
     Private Sub menuEstablishTradeRoute(Optional aOrigin As settlement = Nothing, Optional aDestination As settlement = Nothing)
         Const cost As Integer = 1
@@ -927,45 +969,56 @@
 
         player.removePhilosophy(chosenPhilosophy)
     End Sub
-    Private Sub menuDivineConception(Optional aSettlement As settlement = Nothing)
-        Const cost As Integer = 2
-        Const powerCost As divinePower = divinePower.Destiny
-        Dim god As god = player.god
+    Private Sub menuSongstone(Optional aShard As shard = Nothing)
+        Const cost As Integer = 10
+        Const powerCost As divinePower = divinePower.Fate
 
         Console.WriteLine()
         Console.WriteLine()
 
-        If menuSpendPower(cost, powerCost, "concieve a child.") = False Then Exit Sub
+        If menuSpendPower(cost, powerCost, "transform a location into a Songstone.") = False Then Exit Sub
 
-        Console.WriteLine()
-        Console.WriteLine()
-        Dim settlement As settlement
-        If aSettlement Is Nothing Then
-            settlement = menu.getListChoice(player.settlements, 1, "Select a settlement:")
-            If settlement Is Nothing Then
-                god.addPower(powerCost, cost)
+        Dim shard As shard = aShard
+        If shard Is Nothing Then
+            Console.WriteLine()
+            Console.WriteLine()
+            shard = menu.getListChoice(world.shards, 0, "Select a shard:")
+            If shard Is Nothing Then
+                player.god.addPower(powerCost, cost)
                 Exit Sub
             End If
-        Else
-            settlement = aSettlement
         End If
 
         Console.WriteLine()
-        Dim popsegs As New List(Of String)
-        For Each popseg In constants.popsegArray
-            popsegs.Add(popseg.ToString)
-        Next
-        Dim popStr As String = menu.getListChoice(popsegs, 1, "Select a Citizen:")
-        Dim pop As popseg = constants.getPopSegFromString(popStr)
-        If pop = Nothing Then
-            god.addPower(powerCost, cost)
+        Console.WriteLine()
+        Dim travelLocation As travelLocation = Nothing
+        While True
+            travelLocation = menu.getListChoice(shard.travelLocations, 0, "Select a location:")
+            If travelLocation Is Nothing Then
+                player.god.addPower(powerCost, cost)
+                Exit Sub
+            End If
+            If shard.checkTerraform(travelLocation) = False Then
+                Console.WriteLine("Invalid Songstone target.")
+                Console.WriteLine("Only ruins, wastes and wildernesses may become Songstones.")
+                Console.WriteLine()
+            Else
+                Exit While
+            End If
+        End While
+
+        Console.WriteLine()
+        If menu.confirmChoice(0, "Are you sure you want to transform " & travelLocation.name & " into a Songstone? ") = False Then
+            player.god.addPower(cost, powerCost)
             Exit Sub
         End If
 
-        Console.WriteLine()
-        Console.WriteLine("You spend " & cost & " " & powerCost.ToString & " to ensure the next birth in " & settlement.name & " is a " & stripS(popStr) & ".")
-        settlement.addSettlementModifier(New modifier(Nothing, "Divine Conception", "SettlementGuaranteedRecruit " & popStr))
-        Console.ReadKey()
+        Dim index As Integer = shard.travelLocations.IndexOf(travelLocation)
+        Dim songstone As New settlementSite
+        songstone.name = settlementSite.getRandomSettlementName()
+
+        shard.removeTravelLocation(travelLocation)
+        shard.addTravelLocation(songstone, index)
     End Sub
 
     Private Sub menuCheat()

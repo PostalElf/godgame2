@@ -716,12 +716,13 @@
 
         pBuildingsAvailable.Add(building)
     End Sub
+
     Private Property terraformTarget As travelLocation
     Friend Sub setTerraformTarget(travelLocation As travelLocation)
         terraformTarget = travelLocation
     End Sub
     Private Sub terraform(travelLocation As travelLocation, targetWildernessType As wildernessType)
-        If checkTerraform(travelLocation) = False Then Exit Sub
+        If shard.checkTerraform(travelLocation) = False Then Exit Sub
 
         Dim newLocation As New wilderness(targetWildernessType)
         newLocation.name = wilderness.getRandomWildernessName(newLocation.type)
@@ -732,16 +733,6 @@
         shard.addTravelLocation(newLocation, newLocationIndex)
         shard.removeTravelLocation(travelLocation)
     End Sub
-    Friend Function checkTerraform(travelLocation As travelLocation)
-        If TypeOf travelLocation Is wasteland = False AndAlso _
-            TypeOf travelLocation Is settlementRuins = False AndAlso _
-            TypeOf travelLocation Is wilderness = False Then
-            Debug.Print("Invalid terraforming target.")
-            Return False
-        End If
-
-        Return True
-    End Function
     Private Function getBuilding(id As Integer, ByRef buildingList As List(Of building))
         For Each building In buildingList
             If building.id = id Then Return building

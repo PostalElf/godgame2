@@ -199,6 +199,17 @@
             Return total
         End Get
     End Property
+    Friend Function checkTerraform(travelLocation As travelLocation) As Boolean
+        If TypeOf travelLocation Is wasteland = False AndAlso _
+            TypeOf travelLocation Is settlementRuins = False AndAlso _
+            TypeOf travelLocation Is wilderness = False Then
+            Debug.Print("Invalid terraforming target.")
+            Return False
+        End If
+
+        Return True
+    End Function
+
 
 
     'threats

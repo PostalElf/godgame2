@@ -94,6 +94,15 @@
             Return total
         End Get
     End Property
+    Friend ReadOnly Property inhabitableShards() As List(Of shard)
+        Get
+            Dim total As New List(Of shard)
+            For Each shard In shards
+                If shard.habitable = False Then total.Add(shard)
+            Next
+            Return total
+        End Get
+    End Property
     Friend ReadOnly Property attackableShards(aEmpire As empire) As List(Of shard)
         Get
             Dim total As New List(Of shard)

@@ -166,7 +166,7 @@
 
         For Each wild In constants.wildernessTypeArray
             wonderList.Add(wild, New List(Of wonder))
-            For n = 1 To 3
+            For n = 1 To 4
                 Dim wonder As New wonder
                 With wonder
                     Select Case wild
@@ -174,64 +174,103 @@
                             Select Case n
                                 Case 1
                                     .name = "The Eternal Garden"
-                                    .modifiers.Add(New modifier(.modifiers, "The Eternal Garden", "SettlementIncome Food +50"))
-                                    .modifiers.Add(New modifier(.modifiers, "The Eternal Garden", "SettlementIncome Faith +50"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Eternal Garden", "SettlementIncome Food +30"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Eternal Garden", "SettlementIncome Faith +30"))
                                 Case 2
-
+                                    .name = "The Sword Tree"
+                                    .modifiers.Add(New modifier(.modifiers, "The Sword Tree", "GoodUnlock Metal"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Sword Tree", "WarriorEfficiency +10"))
                                 Case 3
-
+                                    .name = ""
+                                    .modifiers.Add(New modifier(.modifiers, "", "GoodUnlock Reagents"))
+                                    .modifiers.Add(New modifier(.modifiers, "", ""))
+                                Case 4
+                                    .name = ""
+                                    .modifiers.Add(New modifier(.modifiers, "", "GoodUnlock Crystal"))
+                                    .modifiers.Add(New modifier(.modifiers, "", ""))
                             End Select
 
                         Case wildernessType.Lake
                             Select Case n
                                 Case 1
-                                    .name = "The Crystal Fields"
-                                    .modifiers.Add(New modifier(.modifiers, "The Crystal Fields", "GoodUnlock Crystal"))
-                                    .modifiers.Add(New modifier(.modifiers, "The Crystal Fields", "SettlementPopulationIncome Savants +10"))
+                                    .name = "The Reflecting Pond"
+                                    .modifiers.Add(New modifier(.modifiers, "The Reflecting Pond", "SettlementPopulationIncome Priests +10"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Reflecting Pond", "SettlementIncome Faith +10/Savants"))
                                 Case 2
-
+                                    .name = "The Bloody Lake"
+                                    .modifiers.Add(New modifier(.modifiers, "The Bloody Lake", "GoodUnlock Metal"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Bloody Lake", "SettlementPublicOrder +20"))
                                 Case 3
-
+                                    .name = "The Fountain of Youth"
+                                    .modifiers.Add(New modifier(.modifiers, "The Fountain of Youth", "GoodUnlock Reagents"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Fountain of Youth", "SettlementIncome Faith +30"))
+                                Case 4
+                                    .name = "The Floating Forest"
+                                    .modifiers.Add(New modifier(.modifiers, "The Floating Forest", "GoodUnlock Wood"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Floating Forest", "SettlementIncome Science +10/Farmers"))
                             End Select
 
                         Case wildernessType.Mountain
                             Select Case n
                                 Case 1
-                                    .name = "The Fire Mountain"
-                                    .modifiers.Add(New modifier(.modifiers, "The Fire Mountain", "GoodUnlock Metal"))
-                                    .modifiers.Add(New modifier(.modifiers, "The Fire Mountain", "SettlementPopulationIncome Traders +10"))
-                                Case 2
                                     .name = "The Obsidian Ridge"
                                     .modifiers.Add(New modifier(.modifiers, "The Obsidian Ridge", "SettlementPopulationIncome Traders +10"))
                                     .modifiers.Add(New modifier(.modifiers, "The Obsidian Ridge", "SettlementPopulationIncome Savants +10"))
+                                Case 2
+                                    .name = "The Fire Mountain"
+                                    .modifiers.Add(New modifier(.modifiers, "The Fire Mountain", "GoodUnlock Reagents"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Fire Mountain", "SettlementPopulationIncome Savants +10"))
                                 Case 3
-
+                                    .name = "The Giant's Mirror"
+                                    .modifiers.Add(New modifier(.modifiers, "The Giant's Mirror", "GoodUnlock Crystal"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Giant's Mirror", "WarmageEfficiency +10"))
+                                Case 4
+                                    .name = "The High Woods"
+                                    .modifiers.Add(New modifier(.modifiers, "The High Woods", "GoodUnlock Wood"))
+                                    .modifiers.Add(New modifier(.modifiers, "The High Woods", "SettlementPopulationIncome Traders +10"))
                             End Select
 
                         Case wildernessType.Plains
                             Select Case n
                                 Case 1
-                                    .name = "Sandor's Arch"
-                                    .modifiers.Add(New modifier(.modifiers, "Sandor's Arch", "SettlementIncome Wealth +10/Traders"))
-                                    .modifiers.Add(New modifier(.modifiers, "Sandor's Arch", "SettlementIncome Faith +10/Traders"))
-                                Case 2
                                     .name = "The Emerald Sea"
-                                    .modifiers.Add(New modifier(.modifiers, "The Emerald Sea", "SettlementRecruit Farmers +1"))
-                                    .modifiers.Add(New modifier(.modifiers, "The Emerald Sea", "SettlementPopulationIncome Farmers +20"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Emerald Sea", "SettlementRecruit Farmers +2"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Emerald Sea", "SettlementPopulationIncome Farmers +15"))
+                                Case 2
+                                    .name = "The Field of Dreams"
+                                    .modifiers.Add(New modifier(.modifiers, "The Field of Dreams", "GoodUnlock Wood"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Field of Dreams", "GoodUnlock Crystal"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Field of Dreams", "GoodUnlock Reagents"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Field of Dreams", "GoodUnlock Metal"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Field of Dreams", "SettlementPublicOrder -60"))
                                 Case 3
-
+                                    .name = "The Tree of Words"
+                                    .modifiers.Add(New modifier(.modifiers, "The Tree of Words", "SettlementRecruit Priests +2"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Tree of Words", "SettlementPopulationIncome Priests +15"))
+                                Case 4
+                                    .name = ""
+                                    .modifiers.Add(New modifier(.modifiers, "", ""))
+                                    .modifiers.Add(New modifier(.modifiers, "", ""))
                             End Select
 
                         Case wildernessType.Swamp
                             Select Case n
                                 Case 1
                                     .name = "The Cauldron"
-                                    .modifiers.Add(New modifier(.modifiers, "The Cauldron", "GoodUnlock Reagents"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Cauldron", "SettlementIncome Wealth +10/Farmers"))
                                     .modifiers.Add(New modifier(.modifiers, "The Cauldron", "SettlementIncome Science +10/Farmers"))
                                 Case 2
-
+                                    .name = "The Drowned Forest"
+                                    .modifiers.Add(New modifier(.modifiers, "The Drowned Forest", "GoodUnlock Wood"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Drowned Forest", "SettlementIncome Faith +10/Farmers"))
                                 Case 3
-
+                                    .name = "The Iron Bog"
+                                    .modifiers.Add(New modifier(.modifiers, "The Iron Bog", "GoodUnlock Metal"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Iron Bog", "SettlementPopulationIncome Savants +10"))
+                                Case 4
+                                    .name = "The Crystal Fields"
+                                    .modifiers.Add(New modifier(.modifiers, "The Crystal Fields", "GoodUnlock Crystal"))
+                                    .modifiers.Add(New modifier(.modifiers, "The Crystal Fields", "SettlementPopulationIncome Savants +10"))
                             End Select
                     End Select
                 End With

@@ -198,12 +198,16 @@
         End Select
     End Sub
 
-    Private dependentPopseg As popseg = Nothing
+    Private dependentPopseg As popseg = Nothing                         ' -1 = population size
     Private dependentRawHeroSkill As heroSkill = Nothing
     Friend isDependent As Boolean = False                               'multiplies value by dependentPopseg or dependentRawHeroSkill
     Private ReadOnly Property dependentValue(aSettlement As settlement) As Integer
         Get
-            Return aSettlement.population(dependentPopseg) * pValue
+            If dependentPopseg = -1 Then
+                Return aSettlement.populationSize * pValue
+            Else
+                Return aSettlement.population(dependentPopseg) * pValue
+            End If
         End Get
     End Property
     Private ReadOnly Property dependentValue(aHero As hero) As Integer
@@ -227,8 +231,13 @@
             Dim split As String() = rawString.Split("/")
             pValue = CInt(split(0))
 
-            dependentPopseg = constants.getPopSegFromString(split(1))
-            dependentRawHeroSkill = constants.getHeroSkillFromString(split(1))
+            If split(1) = "All" Then
+                dependentPopseg = -1
+            Else
+                dependentPopseg = constants.getPopSegFromString(split(1))
+                dependentRawHeroSkill = constants.getHeroSkillFromString(split(1))
+            End If
+
             isDependent = True
         End If
     End Sub

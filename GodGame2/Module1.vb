@@ -22,8 +22,6 @@
     End Sub
 
     Private Sub immediateTests()
-        Dim settlement As settlement = player.settlements(0)
-
         'insert blank report
         report.Add("", reportQueueType.Blank, player)
 
@@ -1270,6 +1268,9 @@
             Return Nothing
         End If
 
+        If menu.confirmChoice(0, "Do you want to proceed? ") = False Then Return False
+
+        Console.WriteLine()
         Dim chosenPower As divinePower = menu.getFateDestinyChoice
         If chosenPower = Nothing Then Return Nothing
         If god.power(chosenPower) < cost Then
